@@ -1,6 +1,8 @@
 version: '3.7'
 
 services:
+
+  # Airflow Services: Database Container.
   postgres-airflow:
     image: postgres:13
     container_name: airflow_postgres_db
@@ -18,6 +20,7 @@ services:
     networks:
       - backend
 
+  # Airflow Services: Init Container.
   airflow-init:
     build:
       context: .
@@ -34,10 +37,10 @@ services:
       airflow db migrate &&
       airflow users create --username airflow --firstname Air --lastname Flow --role Admin --email airflow@example.com --password airflow
       "
-
     networks:
       - backend
 
+  # Airflow Services: Web Server Container.
   airflow-webserver:
     build:
       context: .
@@ -60,7 +63,6 @@ services:
       - ./dags:/opt/airflow/dags
       - ./scripts:/opt/airflow/scripts
       - ./sql:/opt/airflow/sql
-      - ./sqlite_db:/opt/airflow/sqlite_db
       - ./config.py:/opt/airflow/config.py
       - ./requirements.txt:/opt/airflow/requirements.txt
       - ./logs:/opt/airflow/logs
@@ -76,6 +78,7 @@ services:
       timeout: 10s
       retries: 3
 
+  # Airflow Services: Scheduler Container.
   airflow-scheduler:
     build:
       context: .
@@ -99,19 +102,6 @@ services:
       - MSSQL_DW_DATABASE=${MSSQL_DW_DATABASE}
       - MSSQL_DW_USER=${MSSQL_DW_USER}
       - MSSQL_DW_PASSWORD=${MSSQL_DW_PASSWORD}
-      - MYSQL_HOST=${MYSQL_HOST}
-      - MYSQL_USER=${MYSQL_USER}
-      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
-      - MYSQL_DATABASE=${MYSQL_DATABASE}
-      - ORACLE_HOST=${ORACLE_HOST}
-      - ORACLE_USER=${ORACLE_USER}
-      - ORACLE_PASSWORD=${ORACLE_PASSWORD}
-      - POSTGRES_HOST=${POSTGRES_HOST}
-      - POSTGRES_USER=${POSTGRES_USER}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-      - POSTGRES_DATABASE=${POSTGRES_DATABASE}
-      - SQLITE_DATABASE=${SQLITE_DATABASE}
-      - SQLITE_PATH=${SQLITE_PATH}
     volumes:
       - ./dags:/opt/airflow/dags
       - ./scripts:/opt/airflow/scripts
@@ -130,6 +120,7 @@ services:
       timeout: 10s
       retries: 3
 
+  # Mongo Database Container.
   mongodb:
     image: mongo:latest
     container_name: mongodb
@@ -139,6 +130,22 @@ services:
       - "27018:27017"
     volumes:
       - mongodb-data:/data/db
+    networks:
+      - backend
+
+  # MsSQLServer Database Container
+  mssql-db:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    container_name: mssql_db
+    depends_on:
+      - mongodb
+    restart: always
+    environment:
+      SA_PASSWORD: ${MSSQL_PASSWORD}
+      ACCEPT_EULA: "Y"
+      MSSQL_PID: "Developer"
+    ports:
+      - "${MSSQL_PORT}:1433"
     networks:
       - backend
 
