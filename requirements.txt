@@ -1,0 +1,11 @@
+apache-airflow==2.9.0
+great_expectations
+pandas
+python-dotenv
+psycopg2-binary
+pymysql
+mysql-connector-python
+pyodbc
+cx_Oracle
+sqlalchemy
+Faker
