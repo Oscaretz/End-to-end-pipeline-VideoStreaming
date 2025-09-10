@@ -17,7 +17,7 @@
 * Insertion Script to NoSQL MongoDB. (Luis)
 
 # General Tasks:
-* Diagrams (SQL/NOSQL). (URL)[https://lucid.app/lucidchart/ee34690f-7172-449a-80f3-de2d7002e1c3/edit?view_items=EPsPDx5t0L41%2CEPsPiBVdl89u%2CEPsPuXG9BhAP&invitationId=inv_915b0c61-eb64-47a8-9224-390d582777b2]
+* Diagrams (SQL/NOSQL). [URL](https://lucid.app/lucidchart/ee34690f-7172-449a-80f3-de2d7002e1c3/edit?view_items=EPsPDx5t0L41%2CEPsPiBVdl89u%2CEPsPuXG9BhAP&invitationId=inv_915b0c61-eb64-47a8-9224-390d582777b2)
 * Creation of Prettier Diagrams. (David)
 * Extraction Script from MongoDB. (Gerardo)
 * Insertion & Parsing Script to SQL MsSQLServer DB Bronze layer. (Gerardo)
