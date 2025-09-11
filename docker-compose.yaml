@@ -128,8 +128,6 @@ services:
       - airflow-init
     ports:
       - "27018:27017"
-    volumes:
-      - mongodb-data:/data/db
     networks:
       - backend
 
