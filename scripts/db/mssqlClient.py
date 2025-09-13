@@ -8,5 +8,5 @@ def connect_to_mssql(server, database, username, password, driver="{ODBC Driver 
         print("Successful connection to SQL Server.")
         return conn
     except Exception as e:
-        print("Error connecting to MsSQLServer:", e)
+        print(f"Error connecting to MsSQLServer: {e}")
         return None

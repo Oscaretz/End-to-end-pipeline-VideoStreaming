@@ -1,8 +1,8 @@
 from pymongo import MongoClient
 
-def connect_to_mongo():
+def connect_to_mongo(port):
     try:
-        conn = MongoClient("mongodb://mongodb:27017/")
+        conn = MongoClient(f"mongodb://mongodb:{port}")
         print("Successful connection to MongoDB.")
         return conn
     except Exception as e:

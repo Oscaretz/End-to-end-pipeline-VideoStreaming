@@ -11,10 +11,8 @@ def get_mssql_config():
         "password": os.getenv("MSSQL_PASSWORD")
     }
 
-def get_data_warehouse_config():
+def get_mongo_config():
     return {
-        "server": os.getenv("MSSQL_DW_SERVER"),
-        "database": os.getenv("MSSQL_DW_DATABASE"),
-        "username": os.getenv("MSSQL_DW_USER"),
-        "password": os.getenv("MSSQL_DW_PASSWORD")
+        "database": os.getenv("MONGO_DATABASE"),
+        "port": os.getenv("MONGO_PORT")
     }

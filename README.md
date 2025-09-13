@@ -11,7 +11,6 @@
 # Tasks:
 
 # New More urgent Tasks:
-* Creation of script to create a .env file, maybe I can do it with bash so it's more easier.
 * Implement DBT in Docker.
 * Decide access to MongoDB and prepare all its connections, functions and scripts.
 
