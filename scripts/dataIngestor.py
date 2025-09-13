@@ -2,8 +2,8 @@
 
 from scripts.db.mongoClient import connect_to_mongo
 from scripts.db.mssqlClient import connect_to_mssql
-from config import get_mssql_config, get_mongo_config
 from externalDataReader import read_json_file, read_csv_file
+from config import get_mongo_config, get_mssql_config
 
 from pathlib import Path
 

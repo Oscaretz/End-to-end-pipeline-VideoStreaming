@@ -17,7 +17,7 @@ dag = DAG(
 )
 
 create_data_warehouse_task = PythonOperator(
-    task_id='create_data_warehouse_layers_task',
+    task_id='create_data_warehouse_task',
     python_callable=generate_layer_schemas,
     op_kwargs=get_mssql_config(),
     dag=dag
