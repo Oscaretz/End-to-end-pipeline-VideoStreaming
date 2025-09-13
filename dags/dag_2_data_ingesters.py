@@ -23,12 +23,25 @@ ingest_to_mongo_task = PythonOperator(
     dag=dag
 )
 
-ingest_to_mssql_task = PythonOperator(
-    task_id='ingest_to_mssql_task',
+ingest_to_mssql_task_1 = PythonOperator(
+    task_id='ingest_to_mssql_task_1',
     python_callable=ingest_csv_to_mssql,
-    op_kwargs=get_mssql_config(),
+    op_kwargs={
+        **get_mssql_config(),
+        "filename": "users.csv"       
+    },
+    dag=dag
+)
+
+ingest_to_mssql_task_2 = PythonOperator(
+    task_id='ingest_to_mssql_task_2',
+    python_callable=ingest_csv_to_mssql,
+    op_kwargs={
+        **get_mssql_config(),
+        "filename": "viewing_sessions.csv"       
+    },
     dag=dag
 )
 
 # Set the dependencies between the tasks.
-create_data_warehouse_task
+ingest_to_mongo_task >> ingest_to_mssql_task_1 >> ingest_to_mssql_task_2
