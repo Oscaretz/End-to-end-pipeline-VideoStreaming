@@ -12,8 +12,8 @@
 
 # New More urgent Tasks:
 * Creation of script to create a .env file, maybe I can do it with bash so it's more easier.
-* Repair Everything from the Container to use MsSQLServer and some stuff with MongoDB.
 * Implement DBT in Docker.
+* Decide access to MongoDB and prepare all its connections, functions and scripts.
 
 # Urgent Tasks:
 * Creation of Docker Personalized Image. (David)
