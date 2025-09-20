@@ -1,3 +1,118 @@
-/venv
-/env
-/scripts/gerardo
+# Entornos virtuales Python
+/venv/
+/env/
+venv/
+env/
+.venv/
+.env/
+
+# Archivos de entorno
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+
+# Scripts personales
+/scripts/gerardo/
+
+# Datos SQL Server
+mssql-data/
+
+# Datos generales (bases de datos, archivos grandes)
+data/
+*.db
+*.sqlite
+*.sqlite3
+
+# IDE y editores
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Logs de Airflow (mantener estructura pero no contenido)
+logs/**/*.log
+logs/**/*.txt
+logs/**/*.json
+logs/**/log/
+logs/**/*.pid
+logs/**/*.out
+logs/**/*.err
+
+# Archivos temporales
+*.tmp
+*.temp
+.DS_Store
+Thumbs.db
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# PyCharm
+.idea/
+
+# Coverage reports
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
+
+# Translations
+*.mo
+*.pot
+
+# Flask
+instance/
+.webassets-cache
+
+# Django
+*.log
+local_settings.py
+db.sqlite3
+
+# Backup files
+*.bak
+*.backup
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db

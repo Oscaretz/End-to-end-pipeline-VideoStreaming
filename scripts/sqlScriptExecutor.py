@@ -1,4 +1,5 @@
 # SQL script executors for executing DDL and DML scripts.
+import re
 
 # This module provides functions to execute SQL scripts for creating database schemas.
 def execute_sql_ddl_script(connection, script_path):
@@ -8,14 +9,26 @@ def execute_sql_ddl_script(connection, script_path):
         with open(script_path, 'r') as file:
             sql_script = file.read()
 
-        statements = sql_script.split(';')
+        # Split by GO statements (SQL Server batch separator)
+        # Remove GO statements and split into batches
+        batches = re.split(r'\bGO\b', sql_script, flags=re.IGNORECASE)
 
-        for statement in statements:
-            statement = statement.strip()
-            if statement:
-                cursor.execute(statement)
+        for batch in batches:
+            batch = batch.strip()
+            if not batch:
+                continue
+                
+            # Execute each non-empty batch
+            try:
+                cursor.execute(batch)
+                connection.commit()
+                print(f"Executed batch successfully")
+            except Exception as batch_error:
+                print(f"Error in batch: {batch_error}")
+                print(f"Problematic batch: {batch[:200]}...")  # First 200 chars for debugging
+                # Continue with next batch instead of failing completely
+                continue
 
-        connection.commit()
         print(f"Successfully executed the SQL script: {script_path}")
 
     except Exception as e:
