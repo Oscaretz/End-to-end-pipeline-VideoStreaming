@@ -7,6 +7,7 @@ from scripts.bronze_cleaning import (
     clean_cloud_warehouse,
     clean_expense_iigf,
     clean_international_sales,
+    clean_march2021_pl,
     clean_may2022_pl,
     clean_sale_report
 )
@@ -48,10 +49,18 @@ with DAG(
         op_args=['International_Sale_Report', clean_international_sales, 'InternationalSales']
     )
 
+    # Tarea para March 2021
+    march2021_task = PythonOperator(
+        task_id='march2021_pl_to_silver',
+        python_callable=process_table,
+        op_args=['P__L_March_2021', clean_march2021_pl, 'PL_March2021']
+    )
+
+    # Tarea para May 2022
     may2022_task = PythonOperator(
         task_id='may2022_pl_to_silver',
         python_callable=process_table,
-        op_args=['P__L_March_2021', clean_may2022_pl, 'PL_March2021']
+        op_args=['May-2022', clean_may2022_pl, 'May2022']
     )
 
     sale_report_task = PythonOperator(
@@ -60,5 +69,5 @@ with DAG(
         op_args=['Sale_Report', clean_sale_report, 'SaleReport']
     )
 
-    # Orden de ejecución
-    amazon_task >> cloud_task >> expense_task >> international_task >> may2022_task >> sale_report_task
+    # Orden de ejecución correcto
+    amazon_task >> cloud_task >> expense_task >> international_task >> march2021_task >> may2022_task >> sale_report_task
