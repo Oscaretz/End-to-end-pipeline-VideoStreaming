@@ -11,8 +11,3 @@ def get_mssql_config():
         "password": os.getenv("MSSQL_PASSWORD")
     }
 
-def get_mongo_config():
-    return {
-        "database": os.getenv("MONGO_DATABASE"),
-        "port": os.getenv("MONGO_PORT")
-    }
