@@ -42,6 +42,7 @@ services:
 
   # Airflow Services: Web Server Container.
   airflow-webserver:
+    user: "${UID}:${GID}"
     build:
       context: .
       dockerfile: Dockerfile
@@ -60,7 +61,7 @@ services:
       - AIRFLOW__API__AUTH_BASIC_PASSWORD=${AIRFLOW_PASSWORD}
       - MSSQL_SERVER=${MSSQL_SERVER}
       - MSSQL_DATABASE=${MSSQL_DATABASE}
-      - MSSQL_USER=${MSSQL_USER}
+      - MSSQL_USER=user
       - MSSQL_PASSWORD=${MSSQL_PASSWORD}
     volumes:
       - ./dags:/opt/airflow/dags
@@ -110,6 +111,7 @@ services:
       - ./sql:/opt/airflow/sql
       - ./config.py:/opt/airflow/config.py
       - ./requirements.txt:/opt/airflow/requirements.txt
+
     command: airflow scheduler
     networks:
       - backend
@@ -127,7 +129,7 @@ services:
       - airflow-init
     restart: always
     environment:
-      SA_PASSWORD: ${MSSQL_PASSWORD}
+      SA_PASSWORD: Password_airflow10
       ACCEPT_EULA: "Y"
       MSSQL_PID: "Developer"
     ports:
@@ -143,3 +145,4 @@ networks:
 
 volumes:
   mssql_data:
+  logs:

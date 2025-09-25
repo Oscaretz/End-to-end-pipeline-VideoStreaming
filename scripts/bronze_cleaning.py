@@ -1,6 +1,7 @@
 import pandas as pd
 from scripts.db.mssqlClient import connect_to_mssql
-from config import get_mssql_config
+from sqlalchemy import create_engine
+
 
 # --- Funciones de limpieza ---
 def clean_amazon_sales(df):
@@ -67,64 +68,41 @@ SILVER_TYPES = {
 }
 
 # --- Función para procesar y copiar a Silver ---
+
 def process_table(table_name: str, cleaning_function, silver_table_name: str = None):
-    cfg = get_mssql_config()
-    conn = connect_to_mssql(cfg["server"], cfg["database"], cfg["username"], cfg["password"])
+
+    # Conexión raw (si la necesitas para otras operaciones)
+    conn = connect_to_mssql("mssql_db", "dbo", "SA", "Password_airflow10")
     cursor = conn.cursor()
     
+    # 🔹 Create SQLAlchemy engine
+    connection_str = (
+        "mssql+pyodbc://sa:Password_airflow10@mssql_db/dbo"
+        "?driver=ODBC+Driver+17+for+SQL+Server"
+    )
+    engine = create_engine(connection_str)
+    
     # Leer datos de Bronze
-    df = pd.read_sql_query(f"SELECT * FROM bronze.[{table_name}]", conn)
-    
-    # Limpiar datos
-    df_clean = cleaning_function(df)
-    
-    # Nombre final en Silver
-    silver_name = silver_table_name if silver_table_name else table_name
-    
-    # Crear tabla en Silver con tipos correctos
-    types = SILVER_TYPES.get(silver_name, {})  # ahora usa silver_table_name para consistencia
-    for col in df_clean.columns:
-        if col not in types:
-            if pd.api.types.is_integer_dtype(df_clean[col]):
-                types[col] = 'INT'
-            elif pd.api.types.is_float_dtype(df_clean[col]):
-                types[col] = 'FLOAT'
-            elif pd.api.types.is_datetime64_any_dtype(df_clean[col]):
-                types[col] = 'DATE'
-            else:
-                types[col] = 'NVARCHAR(MAX)'
+    df = pd.read_sql_query(f"SELECT * FROM bronze.[{table_name}]", engine)
 
-    columns_sql = ", ".join([f"[{col}] {types[col]}" for col in df_clean.columns])
-    
-    cursor.execute(f"""
-        IF NOT EXISTS (SELECT * FROM sys.objects 
-                       WHERE object_id = OBJECT_ID(N'silver.[{silver_name}]') 
-                       AND type in (N'U'))
-        BEGIN
-            CREATE TABLE silver.[{silver_name}] ({columns_sql})
-        END
-    """)
-    conn.commit()
-    
-    # Insertar datos
-    for index, row in df_clean.iterrows():
-        cols = ','.join([f"[{col}]" for col in row.index])
-        vals_list = []
-        for col, x in zip(row.index, row.values):
-            col_type = types.get(col, 'NVARCHAR(MAX)')
-            if pd.notnull(x):
-                if col_type in ['INT', 'FLOAT', 'DECIMAL']:
-                    vals_list.append(f"{x}")
-                elif col_type == 'DATE':
-                    vals_list.append(f"'{pd.to_datetime(x).strftime('%Y-%m-%d')}'")
-                else:
-                    val = str(x).replace("'", "''")
-                    vals_list.append(f"'{val}'")
-            else:
-                vals_list.append('NULL')
-        vals = ','.join(vals_list)
-        cursor.execute(f"INSERT INTO silver.[{silver_name}] ({cols}) VALUES ({vals})")
-    
-    conn.commit()
-    cursor.close()
-    conn.close()
+    # Limpiar datos
+    df = cleaning_function(df)
+
+    # Si no se especifica, usar el mismo nombre de tabla
+    if silver_table_name is None:
+        silver_table_name = table_name
+
+    # Mapear tipos de datos si están definidos
+    dtype = SILVER_TYPES.get(f"{silver_table_name}Row", None)
+
+    # Escribir en Silver
+    df.to_sql(
+        silver_table_name,
+        con=engine,
+        schema="silver",
+        if_exists="replace",   # o "append" según tu caso
+        index=False,
+        dtype=dtype
+    )
+
+    print(f"✔️ Tabla {silver_table_name} copiada a Silver con {len(df)} filas")

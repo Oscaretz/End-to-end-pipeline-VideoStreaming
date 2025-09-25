@@ -52,10 +52,10 @@ def ingest_all_csvs():
     for csv_file in CSV_DIR.glob("*.csv"):
         print(f"Processing {csv_file}")
         ingest_csv_to_mssql(
-            server=cfg["server"],
-            database=cfg["database"],
-            username=cfg["username"],
-            password=cfg["password"],
+            server="mssql_db,1433",
+            database="dbo",
+            username="SA",
+            password="Password_airflow10",
             csv_path=csv_file
         )
 
