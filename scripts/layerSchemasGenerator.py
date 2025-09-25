@@ -9,10 +9,10 @@ def get_base_dir():
 
 def generate_layer_schemas(server, database, username, password):
     # Change these values according to your MsSQLServer setup.
-    server = "mssql-db,1433"   # Cambiar a nombre del servicio en Docker
-    database = "dbo"
-    username = "SA"
-    password = "Password_airflow10"
+    server = server or "mssql-db"    # Cambiar a nombre del servicio en Docker
+    database = database or "mssql_db"
+    username = username or "sa"
+    password = password or "your_secure_password"
 
     print("Creating database and schemas step by step...")
     

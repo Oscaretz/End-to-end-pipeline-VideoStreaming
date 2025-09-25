@@ -1,30 +1,54 @@
 from airflow import DAG
-from airflow.providers.microsoft.mssql.operators.mssql import MsSqlOperator
+from airflow.operators.python import PythonOperator
 from datetime import datetime
-import os
+import pyodbc
+from config import get_mssql_config
 
-# Define SQL file path (adjust as needed)
-SQL_FILE_PATH = os.path.join(
-    os.path.dirname(__file__), "..", "sql", "silver_to_gold.sql"
-)
+def run_silver_to_gold():
+    cfg = get_mssql_config()
+    conn = pyodbc.connect(
+        f"DRIVER={{ODBC Driver 18 for SQL Server}};"
+        f"SERVER={cfg['server']},{cfg.get('port',1433)};"
+        f"DATABASE={cfg['database']};"
+        f"UID={cfg['username']};PWD={cfg['password']};"
+        "TrustServerCertificate=Yes"
+    )
+    cursor = conn.cursor()
 
-# Load SQL from file
-with open(SQL_FILE_PATH, "r") as f:
-    SILVER_TO_GOLD_SQL = f.read()
+    # Read SQL script
+    with open("/opt/airflow/sql/silver_to_gold.sql", "r") as f:
+        sql_script = f.read()
+
+    # Split by custom delimiter
+    for stmt in sql_script.split("/* SPLIT */"):
+        stmt = stmt.strip()
+        if stmt:
+            try:
+                cursor.execute(stmt)
+            except Exception as e:
+                print(f"Failed SQL:\n{stmt[:200]}...\nError: {e}")
+                raise
+
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+
+default_args = {
+    "owner": "airflow",
+    "start_date": datetime(2025, 1, 1),
+    "retries": 1
+}
 
 with DAG(
-    dag_id="silver_to_gold_dag",
-    start_date=datetime(2023, 1, 1),
-    schedule_interval="@daily",  # run daily
+    "silver_to_gold",
+    schedule_interval="0 2 * * *",
+    default_args=default_args,
     catchup=False,
-    default_args={"retries": 1},
-    tags=["etl", "silver-to-gold", "mssql"]
+    tags=["gold"]
 ) as dag:
 
-    silver_to_gold = MsSqlOperator(
-        task_id="transform_silver_to_gold",
-        mssql_conn_id="'mssql+pyodbc://sa:Password_airflow10@mssql_db:1433/dbo?driver=ODBC+Driver+17+for+SQL+Server'",  # Airflow Connection ID
-        sql=SILVER_TO_GOLD_SQL,
+    run_task = PythonOperator(
+        task_id="run_silver_to_gold",
+        python_callable=run_silver_to_gold
     )
-
-    silver_to_gold
