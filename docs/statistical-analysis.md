@@ -1,96 +1,85 @@
-# AI Assistance Disclosure
+<img width="1768" height="755" alt="image" src="https://github.com/user-attachments/assets/8887b485-6a48-4c52-a77a-c6377cc21b25" /># Streamlit Benchmark App Documentation - SQL vs NoSQL Comparative Analysis
 
-# Activity: Streamlit Benchmark App (SQL vs NoSQL)
+## Overview
 
-## Time Analysis
-**Time % = (3 / 15) × 100 = 20%**
+This document describes the architecture and design of the **Streamlit Benchmark App**, which compares the performance and use cases of relational (SQL/SQLite) and non-relational (NoSQL/pandas JSON) approaches. The app benchmarks query execution time, memory consumption, and analytical results across multiple business scenarios such as top products and sales trend analysis.
 
-**Time Contribution = 0.25 × 20% = 5%**
-
----
-
-## Content Analysis
-
-### Code Content
-**Content Code % = (820 / 1200) × 100 = 68.33%**
-
-**Content Code Contribution = 0.35 × 68.33% = 23.92%**
-
-### Documentation Content
-**Content Doc % = (210 / 320) × 100 = 65.63%**
-
-**Content Doc Contribution = 0.35 × 65.63% = 22.97%**
+The goal of the project is to provide a **demonstrative tool** for understanding **when relational databases are more effective** and when **non-relational approaches provide advantages**.
 
 ---
 
-## Complexity Assessment
-**Complexity Score = 45% (Moderate-High level)**
+## Application Components
 
-**Complexity Contribution = 0.25 × 45% = 11.25%**
+### 1. Data Generation
+**Technology**: Python + pandas  
+
+Synthetic datasets are generated within the app to simulate an e-commerce scenario:
+- Columns: `order_id`, `product`, `price`, `quantity`, `date`
+- Adjustable dataset size via Streamlit slider (from 1,000 to 50,000 rows)
+- Balanced structure for controlled experiments
+
+![Data-generator](https://github.com/Oscaretz/End-to-end-pipeline-VideoStreaming/blob/widman/images/data-generator.png)
+
+
+### 2. Relational Database Benchmark
+**Technology**: SQLite (in-memory)  
+
+Relational queries are executed against an in-memory SQLite database:
+- SQL queries demonstrate **grouping, aggregation, and filtering**
+- Example: calculating top-selling products or daily revenue
+- Results include **query execution time** and **memory usage**
+
+### 3. Non-Relational Benchmark
+**Technology**: pandas (JSON-like simulation)  
+
+NoSQL behavior is simulated using pandas operations:
+- GroupBy and aggregation replicate JSON-style document queries
+- Flexible schema representation supports semi-structured data
+- Performance measured in terms of **execution time** and **memory usage**
 
 ---
 
-## Self-Assessment
-**Self-Assessment Score = (40 + 52 + 20 + 55) / 4 = 41.75%**
+## Analytical KPIs
 
-**Self-Assessment Contribution = 0.15 × 41.75% = 6.26%**
+The app benchmarks both models across key performance indicators:
+
+1. **Top Products Analysis**
+   - SQL: `GROUP BY product` with `SUM(price*quantity)`
+   - NoSQL: pandas aggregation with `.groupby("product")`
+   - KPI: Identify top 5 products by revenue
+
+![Data-generator](https://github.com/Oscaretz/End-to-end-pipeline-VideoStreaming/blob/widman/images/top_products.png)
+
+
+3. **Sales Trend Analysis**
+   - SQL: Aggregation of revenue by `date`
+   - NoSQL: pandas groupby over `date`
+   - KPI: Evaluate temporal revenue patterns
+  
+    ![Data-generator](https://github.com/Oscaretz/End-to-end-pipeline-VideoStreaming/blob/widman/images/sales_trend.png)
+
+
+4. **Performance Metrics**
+   - Execution time per query (seconds)
+   - Memory consumption (MB)
+   - Visual comparisons via bar charts
+   ![Data-generator](https://github.com/Oscaretz/End-to-end-pipeline-VideoStreaming/blob/widman/images/compute_consumption.png)
+
 
 ---
 
-## Final Result
-**Final AI Assistance % = 5% + 23.92% + 22.97% + 11.25% + 6.26% = 69.40%**
+## Streamlit Interface
+
+The Streamlit app is structured in the following sections:
+
+- **Dataset Generation:** slider to select number of rows, preview of sample dataset
+- **Relational DB Section:** SQL queries, execution metrics, top results
+- **Non-Relational DB Section:** equivalent pandas aggregations, metrics, results
+- **Performance Comparison:** bar charts comparing **time** and **memory usage**
+- **Sales Trend Analysis:** side-by-side line charts for SQL and NoSQL
+- **Insights Section:** textual guidance on when to use SQL vs NoSQL
 
 ---
 
-## Project: Streamlit Benchmark App (Relational vs Non-Relational Databases)
-
-### AI Tool Information
-- **AI Tool Used:** ChatGPT (OpenAI GPT-5)
-- **Overall Assistance Level:** 69.40%
-
-### Primary Use Cases
-- **Code Generation:** 68.33%
-- **Documentation:** 65.63%
-- **Debugging:** 20%
-
-### Human Contributions
-
-#### Tasks Completed Independently:
-- Defined the experimental design for benchmarking SQL vs NoSQL
-- Set up the local Python environment and virtual environment on Windows
-- Installed and configured required packages
-- Ran and validated benchmark tests
-- Structured repository and project files
-
-#### Modifications Made to AI-Generated Content:
-- Adjusted Streamlit scripts to resolve import errors
-- Modified queries to align with available datasets
-- Fixed runtime errors related to MongoDB local unavailability
-- Customized charts and KPIs to highlight relevant performance insights
-- Adapted explanations and documentation for reporting purposes
-
-#### Original Analysis and Insights:
-- Designed benchmarking logic for sales by product, top-selling product, and sales trend
-- Decided to compare both **execution performance** (time, memory) and **business KPIs**
-- Analyzed limitations of using SQLite in-memory vs PostgreSQL for real-world scenarios
-- Proposed extensions with more complex queries (e.g., aggregations, joins)
-- Drafted interpretations for KPIs in both SQL and NoSQL contexts
-
-### Verification Process
-
-**Code Validation:**
-- Executed all AI-generated code in a controlled environment
-- Validated Streamlit app functionality with different datasets
-- Checked correctness of aggregation queries
-- Ensured accuracy of benchmark metrics (time, memory usage)
-
-**Documentation Review:**
-- Edited AI-generated explanations for clarity and technical depth
-- Ensured KPI descriptions were aligned with business objectives
-- Verified that comparisons between SQL and NoSQL were balanced
-
-**Quality Assurance:**
-- Debugged and corrected errors before final integration
-- Manually reviewed and tested every visualization
-- Confirmed consistency between documentation and implemented app
+## Data Flow
 
