@@ -81,9 +81,6 @@ The Streamlit app is structured in the following sections:
 
 ---
 
-
----
-
 ## Technology Stack
 
 | Layer               | Technology   | Purpose                                |
