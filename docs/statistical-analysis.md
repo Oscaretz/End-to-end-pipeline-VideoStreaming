@@ -1,4 +1,4 @@
-<img width="1768" height="755" alt="image" src="https://github.com/user-attachments/assets/8887b485-6a48-4c52-a77a-c6377cc21b25" /># Streamlit Benchmark App Documentation - SQL vs NoSQL Comparative Analysis
+# Streamlit Benchmark App Documentation - SQL vs NoSQL Comparative Analysis
 
 ## Overview
 
