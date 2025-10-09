@@ -151,8 +151,7 @@ This document describes the overall database design for the E-Commerce Analytics
 |--------|-------------|
 | Bronze | Raw CSV data ingestion |
 | Silver | Cleansing, standardization, and normalization |
-| Gold | Business logic modeling and analytical aggregation |
-| Consumption | Visualization and reporting through BI tools |
+| Gold | Business logic modeling and analytical aggregation where BI tools will be used|
 
 ## Benefits  
 
