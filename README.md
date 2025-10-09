@@ -1,12 +1,12 @@
 # End-to-end-pipeline
 
 ### Members of the Team Project:
-1. David
-2. Oscar
-3. Moi
-4. Braulio
-5. Gerardo
-6. Luis
+1. Mario David Hernandez Pantja
+2. Oscar Martinez Estevez
+3. Moises Jesus Carrillo Alonzo
+4. Braulio Perez Tamayo
+5. Gerardo Hernandez Widman
+6. Luis Arturo Michel Perez
 
 ### Diagrams (SQL/NOSQL). [URL](https://lucid.app/lucidchart/ee34690f-7172-449a-80f3-de2d7002e1c3/edit?view_items=EPsPDx5t0L41%2CEPsPiBVdl89u%2CEPsPuXG9BhAP&invitationId=inv_915b0c61-eb64-47a8-9224-390d582777b2)
 
