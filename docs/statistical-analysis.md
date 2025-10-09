@@ -56,14 +56,14 @@ The app benchmarks both models across key performance indicators:
    - NoSQL: pandas groupby over `date`
    - KPI: Evaluate temporal revenue patterns
   
-    ![Data-generator](https://github.com/Oscaretz/End-to-end-pipeline-VideoStreaming/blob/widman/images/sales_trend.png)
+![Data-generator](https://github.com/Oscaretz/End-to-end-pipeline-VideoStreaming/blob/widman/images/sales_trend.png)
 
 
 4. **Performance Metrics**
    - Execution time per query (seconds)
    - Memory consumption (MB)
    - Visual comparisons via bar charts
-   ![Data-generator](https://github.com/Oscaretz/End-to-end-pipeline-VideoStreaming/blob/widman/images/compute_consumption.png)
+![Data-generator](https://github.com/Oscaretz/End-to-end-pipeline-VideoStreaming/blob/widman/images/compute_consumption.png)
 
 
 ---
