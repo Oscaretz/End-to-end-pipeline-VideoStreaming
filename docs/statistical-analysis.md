@@ -81,5 +81,57 @@ The Streamlit app is structured in the following sections:
 
 ---
 
-## Data Flow
+
+---
+
+## Technology Stack
+
+| Layer               | Technology   | Purpose                                |
+|---------------------|-------------|----------------------------------------|
+| Data Generation     | Python + pandas | Create synthetic datasets             |
+| Relational Benchmark| SQLite       | Execute SQL queries on tabular data    |
+| Non-Relational Sim. | pandas (JSON) | Simulate NoSQL queries                |
+| Visualization       | Streamlit + Plotly | UI, benchmarking charts, comparisons |
+
+---
+
+## Key Benefits
+
+### Comparative Analysis
+- Side-by-side demonstration of SQL vs NoSQL
+- Clear visualization of **performance trade-offs**
+- Realistic business KPIs for contextual understanding
+
+### Educational Value
+- Provides **learning tool** for database architecture decisions
+- Showcases when relational systems excel (structured queries, joins)
+- Demonstrates NoSQL advantages (flexibility, schema evolution)
+
+### Lightweight Deployment
+- Entire app runs locally with Streamlit
+- SQLite in-memory for simplicity
+- No external database configuration required
+
+---
+
+## Best Practices Applied
+
+- **Benchmarking Framework:** consistent measurement of time and memory
+- **Transparent Queries:** SQL and pandas queries shown in interface
+- **Interactive UI:** allows dataset scaling and dynamic experimentation
+- **Separation of Concerns:** distinct functions for SQL and NoSQL benchmarks
+- **Reproducibility:** fixed data generation logic for consistent comparisons
+
+---
+
+## Future Enhancements
+
+- Extend to **PostgreSQL** for production-grade SQL benchmarking
+- Add **MongoDB or Redis integration** for true NoSQL backends
+- Implement **joins and nested queries** for advanced SQL scenarios
+- Add **nested JSON structures** to better represent NoSQL advantages
+- Enhance visualization with **parallel coordinates** for performance profiling
+- Integration with **cloud-hosted datasets** for large-scale benchmarking
+
+---
 
