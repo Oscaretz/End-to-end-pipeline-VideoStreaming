@@ -62,5 +62,3 @@ The notebook includes:
 This analysis demonstrates how structured user data can be used to generate actionable insights for streaming platforms. By combining statistical methods and visualization techniques, the notebook provides a foundation for further analyses, such as churn prediction or recommendation systems.
 
 ---
-
-*This notebook was developed as part of an academic exercise for statistical analysis and portfolio development.*
